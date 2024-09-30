@@ -45,7 +45,7 @@ func arabOrRome(a, b string) (first, second int, arab, rome bool) {
 
 	if err1 == nil && err2 == nil {
 		if firstArab < 1 || firstArab > 10 || secondArab < 1 || secondArab > 10 {
-			panic("Паника: введены некорректные числа. Числа должны быть от 1 до 10")
+			panic("Выдача паники, так как введен некорректный операнд.")
 		}
 		arab = true
 		return firstArab, secondArab, true, false
@@ -56,7 +56,7 @@ func arabOrRome(a, b string) (first, second int, arab, rome bool) {
 
 	if ok1 && ok2 {
 		if firstRome < 1 || firstRome > 10 || secondRome < 1 || secondRome > 10 {
-			panic("Паника: введены некорректные числа. Числа должны быть от 1 до 10")
+			panic("Выдача паники, так как введен некорректный операнд.")
 		}
 		rome = true
 		return firstRome, secondRome, false, true
@@ -71,20 +71,24 @@ func arabOrRome(a, b string) (first, second int, arab, rome bool) {
 }
 
 func romeToArab(rome string) (arab int, ok bool) {
-	romeNum := map[string]int{"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
-
-	for i := range rome {
-		if val, found := romeNum[string(rome[i])]; found {
-			if i+1 < len(rome) && romeNum[string(rome[i+1])] > val {
-				arab -= val
-			} else {
-				arab += val
-			}
-		} else {
-			return 0, false
-		}
+	romeNum := map[string]int{
+		"I":    1,
+		"II":   2,
+		"III":  3,
+		"IV":   4,
+		"V":    5,
+		"VI":   6,
+		"VII":  7,
+		"VIII": 8,
+		"IX":   9,
+		"X":    10,
 	}
-	return arab, true
+
+	if val, found := romeNum[rome]; found {
+		return val, true
+	} else {
+		return 0, false
+	}
 }
 
 func arabToRome(num int) string {
